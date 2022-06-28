@@ -25,7 +25,6 @@ import Login from "./Login";
 
 const Profile = () => {
   // Hooks
-  const { currentUser, loading, name, email, image, logOut } = useAuth();
   const [avatarConfig, setAvatarConfig] = useState(null);
   const [data, setData] = useState({});
   const [phoroUrl, setPhotoUrl] = useState("");
@@ -46,32 +45,8 @@ const Profile = () => {
   let storageRef = storage.ref();
 
   const signOut = () => {
-    logOut();
     history.push("/");
   };
-
-  React.useLayoutEffect(() => {
-    let config = randomAvatar(name);
-    setAvatarConfig(config);
-  }, [name]);
-
-  function randomAvatar(name) {
-    console.log(name);
-    const random = (items) => items[Math.floor(Math.random() * items.length)];
-    const calculatedSex = name === "Bob Smith" ? "man" : "woman";
-    const earSize = ["small", "big"];
-    const hairStyle = ["normal", "thick", "mohawk", "womanLong", "womanShort"];
-    const eyeStyle = ["circle", "oval", "smile"];
-    const glassesStyle = ["round", "square", "none"];
-    const noseStyle = ["short", "long", "round"];
-    const mouthStyle = ["laugh", "smile", "peace"];
-    const shirtStyle = ["hoody", "short", "polo"];
-
-    let randomAvatarConfig = {
-      sex: calculatedSex,
-    };
-    return genConfig(randomAvatarConfig);
-  }
 
   const hours = new Date().getHours();
   let greet = null;
@@ -82,13 +57,12 @@ const Profile = () => {
   } else {
     greet = "morning";
   }
-  if (loading) {
-    return (
-      <Container>
-        <h1>Loading...</h1>
-      </Container>
-    );
-  } else if (currentUser) {
+  if (localStorage.getItem("auth") === "true") {
+    // const { name, email, image } = localStorage.getItem("user");
+    // console.log(localStorage.getItem("user"));
+    // get name key from local storage item user
+    const { name, email, image } = JSON.parse(localStorage.getItem("user"));
+    console.log(name);
     return (
       <Container>
         {image ? (

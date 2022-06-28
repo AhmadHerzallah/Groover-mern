@@ -56,4 +56,19 @@ router.post("/addUser", async (req, res) => {
   }
 });
 
+// login router
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (user) {
+    if (user.password === password) {
+      res.status(200).json(user);
+    } else {
+      res.status(401).json({ message: "Wrong password" });
+    }
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+});
+
 export default router;

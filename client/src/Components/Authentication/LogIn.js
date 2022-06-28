@@ -7,6 +7,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../Authentication/Auth";
+import axios from "axios";
+
 import MobileIllustration from "../../assets/icons/mobile_ill_login.svg";
 
 const GlobalStyle = createGlobalStyle`
@@ -35,9 +37,32 @@ const LogIn = () => {
       alert("Please fill out the email field");
     } else if (password === "" || password === undefined) {
       alert("Please fill out the passoword field");
+    } else {
+      await axios
+        .post("http://localhost:5000/api/login", {
+          email,
+          password,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Logged in");
+            // save user's data in local storage
+            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("auth", true);
+
+            history.push("/profile");
+          } else if (res.status === 401) {
+            alert("Wrong Password ");
+          } else if (res.status === 404) {
+            alert("User not found");
+          } else {
+            alert("User already exists");
+          }
+        })
+        .catch((e) => {
+          alert("User already exists");
+        });
     }
-    // const action = await login(email, password);
-    history.push("/profile");
   };
 
   return (
