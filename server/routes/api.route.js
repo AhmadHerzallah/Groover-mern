@@ -2,7 +2,8 @@ import express from "express";
 import fetch from "node-fetch";
 import { spotifyApi } from "../app.js";
 import User from "../models/user.js";
-// import fs
+// import path
+import path from "path";
 import fs from "fs";
 const router = express.Router();
 
@@ -20,16 +21,6 @@ router.get("/searchTrack", async (req, res) => {
     .catch((err) => {
       console.log("The error while searching artists occurred: ", err);
     });
-});
-
-router.get("/avatar", async (req, res) => {
-  const id = req.query.id;
-  const avatar = `../avatars/${id}.png`;
-  // res.sendFile(avatar, { root: "." });
-  fs.readFile(avatar, `base64`, (err, base64Image) => {
-    const dataUrl = `data:image/jpeg;base64, ${base64Image}`;
-    return res.send(`<img src=${dataUrl}>`);
-  });
 });
 
 router.get("/searchArtist", async (req, res) => {

@@ -7,6 +7,9 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import SpotifyWebApi from "spotify-web-api-node";
 import Routes from "./routes/api.route.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +19,9 @@ app.use(bodyParser.json({ extended: true }));
 app.use(cors());
 
 app.use(morgan("dev"));
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 export const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -45,6 +51,7 @@ app.get("/", async (req, res, next) => {
 });
 
 app.use("/api", Routes);
+app.use("/avatar", express.static(path.join(__dirname, "avatars")));
 
 app.use((req, res, next) => {
   next(createError.NotFound());
@@ -57,8 +64,6 @@ app.use((err, req, res, next) => {
     message: err.message,
   });
 });
-app.use(express.static("avatars"));
-
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.URI).then(() => {
