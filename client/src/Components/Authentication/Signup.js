@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../Authentication/Auth";
+import axios from "axios";
 import MobileIllustration from "../../assets/icons/mobile_ill.svg";
 
 const GlobalStyle = createGlobalStyle`
@@ -21,7 +22,6 @@ const GlobalStyle = createGlobalStyle`
 
 const Signup = () => {
   const history = useHistory();
-  const { signUp } = useAuth();
   const [state, setState] = useState({});
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,14 +42,30 @@ const Signup = () => {
       "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})",
     );
     if (state.name === "" || state.name === undefined) {
-      alert("PLEASE FILL OUT THE NAME INPUT");
+      alert("Please fill out the name field");
     } else if (state.email === "" || state.email === undefined) {
-      alert("PLEASE FILL OUT THE EMAIL INPUT");
+      alert("Pleae fill out the email field");
     } else if (password === "" || password === undefined) {
-      alert("PLEASE FILL OUT THE PASSWORD INPUT");
+      alert("Please fill out the password form");
+    } else {
+      await axios
+        .post("http://localhost:5000/api/addUser", state)
+        .then((res) => {
+          if (res.status === 200) {
+            alert("User created successfully");
+            // save user's data in local storage
+            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("auth", true);
+
+            history.push("/profile");
+          } else {
+            alert("User already exists");
+          }
+        })
+        .catch((e) => {
+          alert("User already exists");
+        });
     }
-    const action = await signUp(state, password);
-    history.push("/profile");
   };
 
   return (

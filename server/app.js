@@ -4,7 +4,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-
+import mongoose from "mongoose";
 import SpotifyWebApi from "spotify-web-api-node";
 import Routes from "./routes/api.route.js";
 dotenv.config();
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 export const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.CLIENT_ID, // privadas con env
+  clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
 });
 function newToken() {
@@ -57,6 +57,11 @@ app.use((err, req, res, next) => {
     message: err.message,
   });
 });
+app.use(express.static("avatars"));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
+
+mongoose.connect(process.env.URI).then(() => {
+  console.log("connected to mongo");
+  app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
+});

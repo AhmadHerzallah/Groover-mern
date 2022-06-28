@@ -50,7 +50,7 @@ const NavBar = ({ theme, handleClick, click, toggleTheme }) => {
               Search
             </Link>
             <Link to='/grinder' className='nav-link'>
-              Grinder
+              Jukebox
             </Link>
           </Nav>
           {isSignedIn ? (

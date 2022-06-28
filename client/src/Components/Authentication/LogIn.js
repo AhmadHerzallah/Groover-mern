@@ -21,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
 
 const LogIn = () => {
   const history = useHistory();
-  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -33,11 +32,11 @@ const LogIn = () => {
       "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})",
     );
     if (email === "" || email === undefined) {
-      alert("PLEASE FILL OUT THE EMAIL INPUT");
+      alert("Please fill out the email field");
     } else if (password === "" || password === undefined) {
-      alert("PLEASE FILL OUT THE PASSWORD INPUT");
+      alert("Please fill out the passoword field");
     }
-    const action = await login(email, password);
+    // const action = await login(email, password);
     history.push("/profile");
   };
 

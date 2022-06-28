@@ -111,7 +111,7 @@ const Grinder = () => {
     <>
       <Container>
         <div className={Style.grinder_main}>
-          <h1 className={`text-center`}>Grinder!</h1>
+          <h1 className={`text-center`}>Jukebox!</h1>
           <div className={`${Style.grinder__container}`}>
             <div className='cardContainer'>
               {characters.map((character, index) => (
