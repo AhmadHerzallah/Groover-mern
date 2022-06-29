@@ -69,14 +69,14 @@ const Profile = ({ setIsSignedIn }) => {
   if (localStorage.getItem('auth') === 'true') {
     // const { name, email, image } = localStorage.getItem("user");
     // console.log(localStorage.getItem("user"));
-    // get name key from local storage item user
-    const { name, email, image } = JSON.parse(localStorage.getItem('user'));
+    // get name key from local storage item users
+    const { name, email, avatar } = JSON.parse(localStorage.getItem("user"));
     console.log(name);
     return (
       <Container>
-        {image ? (
+        {avatar ? (
           <img
-            src={phoroUrl}
+            src={avatar}
             className={Style.profile__image}
             alt={`${data && data.username}'s profile`}
           />
@@ -102,6 +102,7 @@ const Profile = ({ setIsSignedIn }) => {
         {/* onSubmit={handleSubmit} */}
         <p>Upload Image (under maintenance)</p>
         <form>
+<<<<<<< HEAD
           <input
             type='file'
             id='avatar'
@@ -110,6 +111,10 @@ const Profile = ({ setIsSignedIn }) => {
             onChange={onImageChange}
           />
           <input type='submit' value='Upload' />
+=======
+          <input type="file" ref={uploadedImage} accept="image/*" />
+          <input type="submit" value="Upload" />
+>>>>>>> 6656ae8f4ad561a725b482715f63d1e8a3faa679
           {/*
 
           <svg viewBox="0 0 36 36" class="circular-chart">

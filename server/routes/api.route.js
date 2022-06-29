@@ -38,7 +38,7 @@ router.get("/searchArtist", async (req, res) => {
 });
 
 router.post("/addUser", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, avatar } = req.body;
 
   const takenEmail = await User.findOne({ email });
   if (takenEmail) {
@@ -48,6 +48,7 @@ router.post("/addUser", async (req, res) => {
       name,
       email,
       password,
+      avatar,
     });
     try {
       await newUser.save();

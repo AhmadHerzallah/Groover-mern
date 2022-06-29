@@ -1,38 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
-import fire from '../../fire';
-import firebase from 'firebase';
-import { Container } from 'react-bootstrap';
-import Style from '../../style/grinder.module.css';
-import TinderCard from 'react-tinder-card';
+import React, { useState, useEffect, useMemo } from "react";
+import fire from "../../fire";
+import firebase from "firebase";
+import { Container } from "react-bootstrap";
+import Style from "../../style/grinder.module.css";
+import TinderCard from "react-tinder-card";
 
 const db = [
   {
-    name: 'Richard Hendricks',
-    url: '../assets/icons/search.svg',
+    name: "Richard Hendricks",
+    url: "../assets/icons/search.svg",
   },
   {
-    name: 'Erlich Bachman',
-    url: '../assets/icons/search.svg',
+    name: "Erlich Bachman",
+    url: "../assets/icons/search.svg",
   },
   {
-    name: 'Monica Hall',
-    url: '../assets/icons/search.svg',
+    name: "Monica Hall",
+    url: "../assets/icons/search.svg",
   },
   {
-    name: 'Jared Dunn',
-    url: '../assets/icons/search.svg',
+    name: "Jared Dunn",
+    url: "../assets/icons/search.svg",
   },
   {
-    name: 'Dinesh Chugtai',
-    url: '../assets/icons/search.svg',
+    name: "Dinesh Chugtai",
+    url: "../assets/icons/search.svg",
   },
 ];
 const alreadyRemoved = [];
 let charactersState = db;
 
-const Grinder = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+const Grinder = ({ isSignedIn, setIsSignedIn }) => {
   const [user, setUser] = useState(null);
   const [characters, setCharacters] = useState(db);
   const [lastDirection, setLastDirection] = useState();
@@ -41,7 +40,7 @@ const Grinder = () => {
       Array(db.length)
         .fill(0)
         .map((i) => React.createRef()),
-    []
+    [],
   );
 
   const obServer = () => {
@@ -54,20 +53,11 @@ const Grinder = () => {
   //   obServer();
   // }, [user]);
 
-  useEffect(() => {
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        setIsSignedIn(!!user);
-      });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-  }, []);
-
   if (!isSignedIn) {
     return (
       <Container>
         <p>
-          Sorry, you have to <a href='/login'>login</a> to see your profile.
+          Sorry, you have to <a href="/login">login</a> to see your profile.
         </p>
       </Container>
     );
@@ -82,22 +72,22 @@ const Grinder = () => {
     // });
     // }
 
-    console.log('removing: ' + nameToDelete);
+    console.log("removing: " + nameToDelete);
     setLastDirection(direction);
     alreadyRemoved.push(nameToDelete);
   };
 
   const outOfFrame = (name) => {
-    console.log(name + ' left the screen!');
+    console.log(name + " left the screen!");
     charactersState = charactersState.filter(
-      (character) => character.name !== name
+      (character) => character.name !== name,
     );
     setCharacters(charactersState);
   };
 
   const swipe = (dir) => {
     const cardsLeft = characters.filter(
-      (person) => !alreadyRemoved.includes(person.name)
+      (person) => !alreadyRemoved.includes(person.name),
     );
     if (cardsLeft.length) {
       const toBeRemoved = cardsLeft[cardsLeft.length - 1].name; // Find the card object to be removed
@@ -113,36 +103,36 @@ const Grinder = () => {
         <div className={Style.grinder_main}>
           <h1 className={`text-center`}>Jukebox!</h1>
           <div className={`${Style.grinder__container}`}>
-            <div className='cardContainer'>
+            <div className="cardContainer">
               {characters.map((character, index) => (
                 <TinderCard
                   ref={childRefs[index]}
-                  className='swipe'
+                  className="swipe"
                   key={character.name}
                   onSwipe={(dir) => swiped(dir, character.name)}
                   onCardLeftScreen={() => outOfFrame(character.name)}
                 >
                   <div
-                    style={{ backgroundImage: 'url(' + character.url + ')' }}
-                    className='card'
+                    style={{ backgroundImage: "url(" + character.url + ")" }}
+                    className="card"
                   >
-                    <h3 style={{ color: '#000' }}>{character.name}</h3>
+                    <h3 style={{ color: "#000" }}>{character.name}</h3>
                   </div>
                 </TinderCard>
               ))}
             </div>
-            <div className='buttons'>
-              <button onClick={() => swipe('left')}>Swipe left!</button>
-              <button onClick={() => swipe('up')}>Swipe up!</button>
+            <div className="buttons">
+              <button onClick={() => swipe("left")}>Swipe left!</button>
+              <button onClick={() => swipe("up")}>Swipe up!</button>
 
-              <button onClick={() => swipe('right')}>Swipe right!</button>
+              <button onClick={() => swipe("right")}>Swipe right!</button>
             </div>
             {lastDirection ? (
-              <h2 key={lastDirection} className='infoText'>
+              <h2 key={lastDirection} className="infoText">
                 Swiped {lastDirection}
               </h2>
             ) : (
-              <h2 className='infoText'>Start Swipin' !</h2>
+              <h2 className="infoText">Start Swipin' !</h2>
             )}
           </div>
         </div>
