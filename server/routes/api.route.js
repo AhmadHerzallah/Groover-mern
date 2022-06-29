@@ -2,6 +2,8 @@ import express from "express";
 import fetch from "node-fetch";
 import { spotifyApi } from "../app.js";
 import User from "../models/user.js";
+import Post from "../models/post.js";
+
 // import path
 import path from "path";
 import fs from "fs";
@@ -71,4 +73,19 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/createPost", (req, res) => {
+  const { title, content, author } = req.body;
+  const newPost = new Post({
+    title,
+    content,
+    author,
+  });
+  newPost.save((err, post) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(post);
+    }
+  });
+});
 export default router;
