@@ -42,12 +42,12 @@ const ArtistCard = (props) => {
         </div>
       ) : (
         <li className={Style.search__results__img}>
-          <Jdenticon
-            size="140"
-            value={props.data.name}
-            style={{
-              borderRadius: "10px",
-            }}
+          <img
+            src={`http://localhost:5000/avatar/${Math.floor(
+              Math.random() * 4 + 1,
+            )}.svg`}
+            alt=""
+            className={Style.search__results__img__self_artists}
           />
         </li>
       )}

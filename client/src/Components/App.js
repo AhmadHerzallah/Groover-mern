@@ -86,12 +86,11 @@ function App({ initialTheme = "dark" }) {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        setIsSignedIn(!!user);
-      });
-    return () => unregisterAuthObserver();
+    if (localStorage.getItem("auth")) {
+      setIsSignedIn(true);
+    } else {
+      setIsSignedIn(false);
+    }
   }, []);
 
   return (
@@ -105,9 +104,11 @@ function App({ initialTheme = "dark" }) {
               theme={theme}
               handleClick={handleClick}
               click={click}
+              isSignedIn={isSignedIn}
+              setIsSignedIn={setIsSignedIn}
               toggleTheme={toggleTheme}
             />
-            <Routes />
+            <Routes isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
           </Router>
         </AuthProvider>
         <Cursor />

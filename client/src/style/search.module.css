@@ -113,8 +113,14 @@
   color: #94a1b2;
 }
 .search__results__img__self_artists {
-  border-radius: 50%;
   filter: drop-shadow(-9px 6px 27px rgba(0, 0, 0, 0.8));
+  position: relative;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
 }
 .search__results__img__self_tracks {
   border-radius: 50%;

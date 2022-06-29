@@ -23,7 +23,7 @@ import {
 
 import Login from "./Login";
 
-const Profile = () => {
+const Profile = ({ setIsSignedIn }) => {
   // Hooks
   const [avatarConfig, setAvatarConfig] = useState(null);
   const [data, setData] = useState({});
@@ -45,6 +45,10 @@ const Profile = () => {
   let storageRef = storage.ref();
 
   const signOut = () => {
+    // signout localstorage
+    localStorage.removeItem("user");
+    localStorage.removeItem("auth");
+    setIsSignedIn(false);
     history.push("/");
   };
 

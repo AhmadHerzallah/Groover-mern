@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema(
     email: String,
     password: String,
     avatar: String,
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artist" }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },

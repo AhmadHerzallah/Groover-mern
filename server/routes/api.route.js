@@ -88,4 +88,24 @@ router.post("/createPost", (req, res) => {
     }
   });
 });
+
+router.get("/recommendations", (req, res) => {
+  // get recommendations from spotifyApi
+  spotifyApi
+    .getRecommendations({
+      min_energy: 0.4,
+      seed_artists: ["0KJ7DiybcwyulZLILX3Z95"],
+      min_popularity: 50,
+      limit: 10,
+    })
+    .then(
+      function (data) {
+        let recommendations = data.body;
+        res.json(recommendations);
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      },
+    );
+});
 export default router;
