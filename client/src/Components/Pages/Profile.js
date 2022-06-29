@@ -51,6 +51,11 @@ const Profile = ({ setIsSignedIn }) => {
     setIsSignedIn(false);
     history('/');
   };
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
 
   const hours = new Date().getHours();
   let greet = null;
