@@ -4,32 +4,32 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Container } from 'react-bootstrap';
-import fire from '../../fire';
-import Style from '../../style/profile.module.css';
-import { useAuth } from '../Authentication/Auth';
-import { useNavigate } from 'react-router-dom';
-import Avatar, { genConfig, AvatarConfig } from 'react-nice-avatar';
+import React, { useState, useEffect, useRef } from "react";
+import { Container } from "react-bootstrap";
+import fire from "../../fire";
+import Style from "../../style/profile.module.css";
+import { useAuth } from "../Authentication/Auth";
+import { useNavigate } from "react-router-dom";
+import Avatar, { genConfig, AvatarConfig } from "react-nice-avatar";
 
-import firebase from 'firebase';
+import firebase from "firebase";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   Redirect,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import Login from './Login';
+import Login from "./Login";
 
 const Profile = ({ setIsSignedIn }) => {
   // Hooks
   const [avatarConfig, setAvatarConfig] = useState(null);
   const [data, setData] = useState({});
-  const [phoroUrl, setPhotoUrl] = useState('');
+  const [phoroUrl, setPhotoUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(45);
-  const uploadedImage = useRef('');
+  const uploadedImage = useRef("");
   const history = useNavigate();
   let config = genConfig();
   const db = firebase.database();
@@ -46,10 +46,10 @@ const Profile = ({ setIsSignedIn }) => {
 
   const signOut = () => {
     // signout localstorage
-    localStorage.removeItem('user');
-    localStorage.removeItem('auth');
+    localStorage.removeItem("user");
+    localStorage.removeItem("auth");
     setIsSignedIn(false);
-    history('/');
+    history("/");
   };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -60,13 +60,13 @@ const Profile = ({ setIsSignedIn }) => {
   const hours = new Date().getHours();
   let greet = null;
   if (hours >= 12 && hours <= 17) {
-    greet = 'afternoon';
+    greet = "afternoon";
   } else if (hours >= 17) {
-    greet = 'evening';
+    greet = "evening";
   } else {
-    greet = 'morning';
+    greet = "morning";
   }
-  if (localStorage.getItem('auth') === 'true') {
+  if (localStorage.getItem("auth") === "true") {
     // const { name, email, image } = localStorage.getItem("user");
     // console.log(localStorage.getItem("user"));
     // get name key from local storage item users
@@ -94,27 +94,22 @@ const Profile = ({ setIsSignedIn }) => {
         </p>
         <p>Email: {email}</p>
         <p>
-          photoUrl:{' '}
-          {data && data.photo === '' ? "There's no image" : data.photo}
+          photoUrl:{" "}
+          {data && data.photo === "" ? "There's no image" : data.photo}
         </p>
         <button onClick={signOut}>Signout</button>
         <p>{firebase.auth().currentUser && firebase.auth().currentUser.uid}</p>
         {/* onSubmit={handleSubmit} */}
         <p>Upload Image (under maintenance)</p>
         <form>
-<<<<<<< HEAD
           <input
-            type='file'
-            id='avatar'
-            name='avatar'
-            accept='image/*'
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/*"
             onChange={onImageChange}
           />
-          <input type='submit' value='Upload' />
-=======
-          <input type="file" ref={uploadedImage} accept="image/*" />
           <input type="submit" value="Upload" />
->>>>>>> 6656ae8f4ad561a725b482715f63d1e8a3faa679
           {/*
 
           <svg viewBox="0 0 36 36" class="circular-chart">
@@ -145,7 +140,7 @@ const Profile = ({ setIsSignedIn }) => {
     return (
       <Container>
         <p>
-          Sorry, you have to <a href='/login'>login</a> to see your profile.
+          Sorry, you have to <a href="/login">login</a> to see your profile.
         </p>
       </Container>
     );
