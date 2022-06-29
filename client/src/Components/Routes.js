@@ -7,14 +7,26 @@ import Login from "./Authentication/LogIn";
 import Profile from "./Pages/Profile";
 import Home from "./Pages/Home";
 import Search from "./Pages/Search";
+import Landing from "./Pages/Landing";
 
 // Authentication
 import Signup from "./Authentication/Signup";
 
 const Routess = ({ isSignedIn, setIsSignedIn }) => {
+  React.useEffect(() => {
+    if (localStorage.getItem("auth")) {
+      setIsSignedIn(true);
+    } else {
+      setIsSignedIn(false);
+    }
+  }, []);
   return (
     <Routes>
-      <Route path="/" exact element={<Home />} />
+      {isSignedIn ? (
+        <Route path="/" exact element={<Home />} />
+      ) : (
+        <Route path="/" exact element={<Landing />} />
+      )}
       <Route path="/search" exact element={<Search />} />
       <Route
         path="/login"
