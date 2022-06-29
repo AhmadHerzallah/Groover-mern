@@ -5,7 +5,7 @@ import { ArrowLeft } from "react-feather";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Authentication/Auth";
 import axios from "axios";
 import MobileIllustration from "../../assets/icons/mobile_ill.svg";
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Signup = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const [state, setState] = useState({});
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,6 +49,15 @@ const Signup = () => {
       alert("Please fill out the password form");
     } else {
       await axios
+        .post("http://localhost:5000/api/users", {
+          name: state.name,
+          email: state.email,
+          password: state.password,
+          avatar: `http://localhost:5000/avatar/${Math.floor(
+            Math.random() * 4 + 1,
+          )}.svg`,
+        })
+
         .post("http://localhost:5000/api/addUser", state)
         .then((res) => {
           if (res.status === 200) {
@@ -57,7 +66,7 @@ const Signup = () => {
             localStorage.setItem("user", JSON.stringify(res.data));
             localStorage.setItem("auth", true);
 
-            history.push("/profile");
+            history("/profile");
           } else {
             alert("User already exists");
           }

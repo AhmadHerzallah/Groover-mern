@@ -5,7 +5,7 @@ import { ArrowLeft } from "react-feather";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Authentication/Auth";
 import axios from "axios";
 
@@ -21,8 +21,8 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const LogIn = () => {
-  const history = useHistory();
+const LogIn = ({ setIsSignedIn }) => {
+  const history = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,8 +49,8 @@ const LogIn = () => {
             // save user's data in local storage
             localStorage.setItem("user", JSON.stringify(res.data));
             localStorage.setItem("auth", true);
-
-            history.push("/profile");
+            setIsSignedIn(true);
+            history("/profile");
           } else if (res.status === 401) {
             alert("Wrong Password ");
           } else if (res.status === 404) {

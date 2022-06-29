@@ -9,7 +9,7 @@ import { Container } from "react-bootstrap";
 import fire from "../../fire";
 import Style from "../../style/profile.module.css";
 import { useAuth } from "../Authentication/Auth";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Avatar, { genConfig, AvatarConfig } from "react-nice-avatar";
 
 import firebase from "firebase";
@@ -30,7 +30,7 @@ const Profile = ({ setIsSignedIn }) => {
   const [phoroUrl, setPhotoUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(45);
   const uploadedImage = useRef("");
-  const history = useHistory();
+  const history = useNavigate();
   let config = genConfig();
   const db = firebase.database();
 
@@ -49,7 +49,7 @@ const Profile = ({ setIsSignedIn }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("auth");
     setIsSignedIn(false);
-    history.push("/");
+    history("/");
   };
 
   const hours = new Date().getHours();

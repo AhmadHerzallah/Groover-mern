@@ -6,7 +6,7 @@ import "../style/App.css";
 
 import React, { useState, useEffect } from "react";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Import ThemeProvider from Styled-components
 import { ThemeProvider } from "styled-components";
@@ -26,7 +26,7 @@ import Cursor from "./Cursor";
 import NavBar from "./Nav";
 import firebase from "firebase";
 import VideoBackground from "./VideoBackground";
-import Routes from "./Routes";
+import Routess from "./Routes";
 
 //#endregion
 
@@ -108,7 +108,7 @@ function App({ initialTheme = "dark" }) {
               setIsSignedIn={setIsSignedIn}
               toggleTheme={toggleTheme}
             />
-            <Routes isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
+            <Routess isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
           </Router>
         </AuthProvider>
         <Cursor />

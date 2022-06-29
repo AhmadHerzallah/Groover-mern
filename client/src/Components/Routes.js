@@ -1,6 +1,5 @@
 import React from "react";
-import Switch from "react-bootstrap/esm/Switch";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Grinder from "./Pages/Grinder";
 // import Login from './Pages/Login';
 import Login from "./Authentication/LogIn";
@@ -12,19 +11,35 @@ import Search from "./Pages/Search";
 // Authentication
 import Signup from "./Authentication/Signup";
 
-const Routes = ({ isSignedIn, setIsSignedIn }) => {
+const Routess = ({ isSignedIn, setIsSignedIn }) => {
   return (
-    <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      <Route path="/search" exact component={Search} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/profile" exact component={Profile} />
-      <Route path="/grinder" exact component={Grinder} />
-      <Route path="/signup" exact component={Signup} />
-    </Switch>
+    <Routes>
+      <Route path="/" exact element={<Home />} />
+      <Route path="/search" exact element={<Search />} />
+      <Route
+        path="/login"
+        exact
+        element={
+          <Login isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
+        }
+      />
+      <Route
+        path="/profile"
+        exact
+        element={
+          <Profile isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
+        }
+      />
+      <Route path="/grinder" exact element={<Grinder />} />
+      <Route
+        path="/signup"
+        exact
+        element={
+          <Signup isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
+        }
+      />
+    </Routes>
   );
 };
 
-export default Routes;
+export default Routess;
