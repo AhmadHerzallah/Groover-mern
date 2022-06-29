@@ -30,7 +30,13 @@ const Routess = ({ isSignedIn, setIsSignedIn }) => {
           <Profile isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
         }
       />
-      <Route path="/grinder" exact element={<Grinder />} />
+      <Route
+        path="/grinder"
+        exact
+        element={
+          <Grinder isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
+        }
+      />
       <Route
         path="/signup"
         exact

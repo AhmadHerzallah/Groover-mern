@@ -49,19 +49,18 @@ const Signup = () => {
       alert("Please fill out the password form");
     } else {
       await axios
-        .post("http://localhost:5000/api/users", {
+        .post("http://localhost:5000/api/addUser", {
           name: state.name,
           email: state.email,
-          password: state.password,
+          password: password,
           avatar: `http://localhost:5000/avatar/${Math.floor(
             Math.random() * 4 + 1,
           )}.svg`,
         })
-
-        .post("http://localhost:5000/api/addUser", state)
         .then((res) => {
           if (res.status === 200) {
             alert("User created successfully");
+            console.log(res);
             // save user's data in local storage
             localStorage.setItem("user", JSON.stringify(res.data));
             localStorage.setItem("auth", true);
@@ -136,6 +135,7 @@ const Signup = () => {
                   className={signUpStyle.form__input}
                   type="password"
                   id="password"
+                  name="password"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
