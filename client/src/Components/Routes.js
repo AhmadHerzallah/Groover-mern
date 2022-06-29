@@ -1,38 +1,50 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Grinder from "./Pages/Grinder";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Grinder from './Pages/Grinder';
 // import Login from './Pages/Login';
-import Login from "./Authentication/LogIn";
+import Login from './Authentication/LogIn';
 
-import Profile from "./Pages/Profile";
-import Home from "./Pages/Home";
-import Search from "./Pages/Search";
+import Profile from './Pages/Profile';
+import Home from './Pages/Home';
+import Search from './Pages/Search';
+import Landing from './Pages/Landing';
 
 // Authentication
-import Signup from "./Authentication/Signup";
+import Signup from './Authentication/Signup';
 
 const Routess = ({ isSignedIn, setIsSignedIn }) => {
+  React.useEffect(() => {
+    if (localStorage.getItem('auth')) {
+      setIsSignedIn(true);
+    } else {
+      setIsSignedIn(false);
+    }
+  }, []);
   return (
     <Routes>
-      <Route path="/" exact element={<Home />} />
-      <Route path="/search" exact element={<Search />} />
+      {isSignedIn ? (
+        <Route path='/' exact element={<Home />} />
+      ) : (
+        <Route path='/' exact element={<Landing />} />
+      )}
+      <Route path='/search' exact element={<Search />} />
       <Route
-        path="/login"
+        path='/login'
         exact
         element={
           <Login isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
         }
       />
       <Route
-        path="/profile"
+        path='/profile'
         exact
         element={
           <Profile isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
         }
       />
-      <Route path="/grinder" exact element={<Grinder />} />
+      <Route path='/grinder' exact element={<Grinder />} />
       <Route
-        path="/signup"
+        path='/signup'
         exact
         element={
           <Signup isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
